@@ -58,6 +58,20 @@
   cursor: default;
 }
 
+.download-primary .download-note strong {
+  color: var(--text);
+}
+
+.download-item-featured {
+  border-color: var(--accent-dim);
+  background: var(--accent-soft);
+}
+
+.download-item-featured .download-item-icon {
+  color: var(--text);
+  background: var(--panel-2);
+}
+
 .download-item-icon {
   display: grid;
   place-items: center;

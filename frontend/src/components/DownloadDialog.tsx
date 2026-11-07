@@ -30,9 +30,9 @@ export function DownloadDialog({ open, onClose }: DownloadDialogProps) {
     <Modal
       open={open}
       title="下载 StarBase"
-      subtitle="源码、本机 Agent、桌面版与 Linux 服务端"
+      subtitle="桌面应用、源码、Agent 与 Linux 服务端"
       onClose={onClose}
-      width={620}
+      width={640}
       footer={
         <>
           <div className="modal-footer-spacer" />
@@ -43,6 +43,44 @@ export function DownloadDialog({ open, onClose }: DownloadDialogProps) {
       }
     >
       <div className="download-panel">
+        <section className="download-section download-primary">
+          <h3>桌面应用（推荐）</h3>
+          <p className="download-note">
+            像 Navicat 一样双击打开。内置前端与数据库引擎，<strong>无需登录、离线可用</strong>，可直接连接
+            localhost、127.0.0.1 与内网数据库。
+          </p>
+          <div className="download-grid">
+            <a
+              className="download-item download-item-featured"
+              href={RELEASE_FILES.desktopExe}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span className="download-item-icon">
+                <Monitor size={15} />
+              </span>
+              <span className="download-item-copy">
+                <strong>直接下载 StarBaseDesktop.exe</strong>
+                <small>单文件 · 双击即用 · Windows 10/11 x64</small>
+              </span>
+              <span className="download-item-arrow">→</span>
+            </a>
+            <a className="download-item" href={RELEASE_FILES.desktopWindows} target="_blank" rel="noreferrer">
+              <span className="download-item-icon">
+                <Download size={15} />
+              </span>
+              <span className="download-item-copy">
+                <strong>桌面版 ZIP（含说明）</strong>
+                <small>压缩后体积更小，解压后双击 StarBaseDesktop.exe</small>
+              </span>
+              <span className="download-item-arrow">→</span>
+            </a>
+          </div>
+          <div className="agent-tip">
+            Windows 首次运行可能提示“未知发布者”，点击“更多信息 → 仍要运行”即可。桌面版不需要账号登录。
+          </div>
+        </section>
+
         <section className="download-section">
           <h3>源码仓库</h3>
           <div className="download-grid">
@@ -112,18 +150,8 @@ export function DownloadDialog({ open, onClose }: DownloadDialogProps) {
         </section>
 
         <section className="download-section">
-          <h3>桌面版与服务端</h3>
+          <h3>Linux 服务端</h3>
           <div className="download-grid">
-            <a className="download-item" href={RELEASE_FILES.desktopWindows} target="_blank" rel="noreferrer">
-              <span className="download-item-icon">
-                <Monitor size={15} />
-              </span>
-              <span className="download-item-copy">
-                <strong>StarBase Desktop（Windows）</strong>
-                <small>离线使用，本机直连 localhost / 内网数据库</small>
-              </span>
-              <span className="download-item-arrow">→</span>
-            </a>
             <a className="download-item" href={RELEASE_FILES.serverLinux} target="_blank" rel="noreferrer">
               <span className="download-item-icon">
                 <Server size={15} />
@@ -140,15 +168,15 @@ export function DownloadDialog({ open, onClose }: DownloadDialogProps) {
         <div className="download-steps">
           <div className="download-step">
             <span>1</span>
-            <p>下载并启动 Agent，控制台会显示 6 位配对码。</p>
+            <p>下载并双击 StarBaseDesktop.exe，不需要登录。</p>
           </div>
           <div className="download-step">
             <span>2</span>
-            <p>网站「查看 → 本地 Agent」输入配对码，开启本地模式。</p>
+            <p>进入工作台后新建连接，填 localhost / 127.0.0.1。</p>
           </div>
           <div className="download-step">
             <span>3</span>
-            <p>新建连接时填 localhost / 127.0.0.1 即可访问本机数据库。</p>
+            <p>桌面版离线可用，连接配置与密码只保存在本机。</p>
           </div>
         </div>
 
