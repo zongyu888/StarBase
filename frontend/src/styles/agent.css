@@ -1,0 +1,212 @@
+/* StarBase local Agent */
+.agent-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.agent-status-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel-2);
+}
+
+.agent-status-icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  color: var(--muted);
+  background: var(--panel-3);
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.agent-status-icon.online {
+  color: var(--green);
+  background: var(--green-soft);
+  border-color: color-mix(in srgb, var(--green) 35%, transparent);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--green) 18%, transparent);
+}
+
+.agent-status-copy {
+  min-width: 0;
+  flex: 1;
+}
+
+.agent-status-copy strong {
+  display: block;
+  font-size: 12.5px;
+}
+
+.agent-status-copy span {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 11px;
+  font-family: var(--mono);
+  word-break: break-all;
+}
+
+.agent-active-badge {
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  color: var(--green);
+  background: var(--green-soft);
+  border: 1px solid color-mix(in srgb, var(--green) 32%, transparent);
+  white-space: nowrap;
+}
+
+.agent-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.agent-step {
+  display: flex;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  background: var(--panel-2);
+}
+
+.agent-step-index {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-dim);
+}
+
+.agent-step strong {
+  display: block;
+  font-size: 12px;
+}
+
+.agent-step p {
+  margin: 3px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.agent-step code {
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: var(--code-bg);
+  border: 1px solid var(--border-soft);
+  font-family: var(--mono);
+  font-size: 10.5px;
+}
+
+.agent-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 9px 11px;
+  border-radius: 8px;
+  border: 1px solid var(--border-soft);
+  background: var(--bg-soft);
+  color: var(--muted);
+  font-size: 10.5px;
+  line-height: 1.6;
+}
+
+.agent-tip svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--accent);
+}
+
+.agent-pair .field {
+  margin: 0;
+}
+
+.agent-pin-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.agent-pin-row > svg {
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.agent-pin-input {
+  flex: 1;
+  font-family: var(--mono);
+  letter-spacing: 0.35em;
+  font-size: 15px;
+  text-align: center;
+}
+
+.agent-mode {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.agent-mode-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel-2);
+}
+
+.agent-mode-row > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.agent-mode-row strong {
+  display: block;
+  font-size: 12.5px;
+}
+
+.agent-mode-row p {
+  margin: 3px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.agent-mode-list {
+  margin: 0;
+  padding: 0 0 0 18px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+.agent-mode-pill {
+  color: var(--green);
+  border-color: color-mix(in srgb, var(--green) 30%, transparent);
+  background: var(--green-soft);
+}
+
+.connection-security-note.agent-local-note {
+  border-color: color-mix(in srgb, var(--green) 28%, transparent);
+  background: var(--green-soft);
+}
+
+.connection-security-note.agent-local-note svg {
+  color: var(--green);
+}

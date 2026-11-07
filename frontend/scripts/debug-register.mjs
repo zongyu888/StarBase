@@ -1,0 +1,18 @@
+import { chromium } from 'playwright';
+const browser = await chromium.launch({ headless: true, channel: 'msedge' });
+const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+await page.goto('http://127.0.0.1:8621', { waitUntil: 'networkidle' });
+await page.locator('.auth-card').waitFor();
+await page.getByRole('tab', { name: '注册' }).click();
+await page.getByLabel('用户名', { exact: true }).fill('user9');
+await page.getByLabel('显示名称（可选）').fill('User Nine');
+await page.locator('.auth-field').filter({ hasText: '邮箱' }).first().locator('input').fill('user9@example.com');
+console.log('email value', await page.locator('.auth-field').filter({ hasText: '邮箱' }).first().locator('input').inputValue());
+console.log('fields', await page.locator('.auth-field').allInnerTexts());
+await page.getByRole('button', { name: '发送验证码' }).click();
+await page.waitForTimeout(1200);
+console.log('after fields', await page.locator('.auth-field').allInnerTexts());
+console.log('all dev codes', await page.locator('.auth-dev-code').allInnerTexts());
+console.log('email code count', await page.locator('.auth-field').filter({ hasText: '邮箱验证码' }).locator('.auth-dev-code').count());
+await page.screenshot({ path: '../screenshots/debug-register.png' });
+await browser.close();
