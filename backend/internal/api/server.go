@@ -240,19 +240,34 @@ func securityHeaders() gin.HandlerFunc {
 	}
 }
 
+func publicOriginAllowed(raw, origin string) bool {
+	raw = strings.TrimSpace(raw)
+	if raw == "" {
+		return false
+	}
+	parsed, err := url.Parse(origin)
+	if err != nil || parsed.Host == "" {
+		return false
+	}
+	for _, candidate := range strings.Split(raw, ",") {
+		publicOrigin, err := url.Parse(strings.TrimSpace(candidate))
+		if err != nil || publicOrigin.Host == "" {
+			continue
+		}
+		if strings.EqualFold(parsed.Scheme, publicOrigin.Scheme) && strings.EqualFold(parsed.Host, publicOrigin.Host) {
+			return true
+		}
+	}
+	return false
+}
+
 func (s *Server) corsMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		origin := c.GetHeader("Origin")
 		allowedOrigin := false
 		if origin != "" {
 			if parsed, err := url.Parse(origin); err == nil {
-				host := strings.ToLower(parsed.Hostname())
-				allowedOrigin = isLoopbackName(host)
-				if !allowedOrigin && s.PublicOrigin != "" {
-					if publicOrigin, parseErr := url.Parse(strings.TrimSpace(s.PublicOrigin)); parseErr == nil {
-						allowedOrigin = strings.EqualFold(parsed.Scheme, publicOrigin.Scheme) && strings.EqualFold(parsed.Host, publicOrigin.Host)
-					}
-				}
+				allowedOrigin = isLoopbackName(parsed.Hostname()) || publicOriginAllowed(s.PublicOrigin, origin)
 			}
 			if allowedOrigin {
 				c.Header("Access-Control-Allow-Origin", origin)

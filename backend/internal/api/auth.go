@@ -133,11 +133,8 @@ func (s *Server) originAllowed(c *gin.Context) bool {
 	if isLoopbackName(parsed.Hostname()) && isLoopbackName(requestName) {
 		return true
 	}
-	if s.PublicOrigin != "" {
-		publicParsed, err := url.Parse(strings.TrimSpace(s.PublicOrigin))
-		if err == nil && strings.EqualFold(parsed.Scheme, publicParsed.Scheme) && strings.EqualFold(parsed.Host, publicParsed.Host) {
-			return true
-		}
+	if publicOriginAllowed(s.PublicOrigin, origin) {
+		return true
 	}
 	return false
 }
