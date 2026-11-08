@@ -10,6 +10,7 @@ import {
   KeyRound,
   LogIn,
   Mail,
+  Monitor,
   RefreshCw,
   ShieldCheck,
   UserPlus,
@@ -19,6 +20,7 @@ import { classNames } from '../lib/utils';
 import { useAuthStore } from '../store/authStore';
 import type { CaptchaChallenge } from '../types';
 import { Spinner } from '../components/ui';
+import { DownloadDialog } from '../components/DownloadDialog';
 
 type Mode = 'login' | 'register' | 'reset';
 
@@ -37,6 +39,7 @@ export function AuthView() {
   const clearError = useAuthStore((state) => state.clearError);
 
   const [mode, setMode] = useState<Mode>('login');
+  const [downloadOpen, setDownloadOpen] = useState(false);
   const [loginValue, setLoginValue] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
@@ -591,12 +594,18 @@ export function AuthView() {
             ) : null}
           </form>
 
+          <button type="button" className="auth-local-download" onClick={() => setDownloadOpen(true)}>
+            <Monitor size={14} />
+            下载桌面版 · 无需登录 / 离线可用
+          </button>
+
           <div className="auth-card-foot">
             <span>首次部署请查看服务端启动日志中的管理员初始密码。</span>
             <span>普通用户无法连接服务器本机/内网数据库。</span>
           </div>
         </section>
       </main>
+      <DownloadDialog open={downloadOpen} onClose={() => setDownloadOpen(false)} />
     </div>
   );
 }

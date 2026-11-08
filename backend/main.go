@@ -149,6 +149,7 @@ func main() {
 		CookieSecure:   envBoolDefault("NAVIDECK_COOKIE_SECURE", false),
 		PublicOrigin:   strings.TrimSpace(os.Getenv("NAVIDECK_PUBLIC_ORIGIN")),
 		TrustedProxies: splitCSV(os.Getenv("NAVIDECK_TRUSTED_PROXIES")),
+		DownloadsDir:   filepath.Join(dataDir, "downloads"),
 	}
 	httpServer := &http.Server{
 		Addr:              host + ":" + port,

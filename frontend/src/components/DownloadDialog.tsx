@@ -1,5 +1,5 @@
 import { Cable, Download, GitBranch, Monitor, Server } from 'lucide-react';
-import { RELEASE_FILES, REPO_GITHUB, REPO_GITEE, SOURCE_ZIP_GITHUB } from '../lib/links';
+import { RELEASE_FILES, LOCAL_DOWNLOADS, REPO_GITHUB, REPO_GITEE, SOURCE_ZIP_GITHUB } from '../lib/links';
 import { useAppStore } from '../store/appStore';
 import { Modal } from './ui';
 
@@ -52,16 +52,25 @@ export function DownloadDialog({ open, onClose }: DownloadDialogProps) {
           <div className="download-grid">
             <a
               className="download-item download-item-featured"
-              href={RELEASE_FILES.desktopExe}
-              target="_blank"
-              rel="noreferrer"
+              href={LOCAL_DOWNLOADS.desktopExe}
+              download
             >
               <span className="download-item-icon">
                 <Monitor size={15} />
               </span>
               <span className="download-item-copy">
-                <strong>直接下载 StarBaseDesktop.exe</strong>
-                <small>单文件 · 双击即用 · Windows 10/11 x64</small>
+                <strong>本地下载 StarBaseDesktop.exe</strong>
+                <small>从当前站点直接下载 · 无需登录 · 双击即用</small>
+              </span>
+              <span className="download-item-arrow">↓</span>
+            </a>
+            <a className="download-item" href={RELEASE_FILES.desktopExe} target="_blank" rel="noreferrer">
+              <span className="download-item-icon">
+                <Download size={15} />
+              </span>
+              <span className="download-item-copy">
+                <strong>GitHub 下载 exe</strong>
+                <small>备用线路 · 从 GitHub Releases 下载</small>
               </span>
               <span className="download-item-arrow">→</span>
             </a>

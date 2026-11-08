@@ -31,6 +31,7 @@ type Server struct {
 	CookieSecure   bool
 	PublicOrigin   string
 	TrustedProxies []string
+	DownloadsDir   string
 	Desktop        bool
 }
 
@@ -44,6 +45,7 @@ func (s *Server) Router() *gin.Engine {
 	}
 	r.Use(s.hostGuard(), gin.Logger(), gin.Recovery(), securityHeaders(), s.corsMiddleware(), s.authMiddleware())
 
+	r.GET("/downloads/:file", s.downloadFile)
 	r.GET("/api/health", s.health)
 	r.GET("/api/auth/status", s.authStatus)
 	r.GET("/api/auth/captcha", s.authCaptcha)

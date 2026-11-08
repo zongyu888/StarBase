@@ -15,7 +15,7 @@ const (
 	DriverChroma    = "chroma"
 )
 
-const Version = "1.5.1"
+const Version = "1.5.2"
 
 func DefaultPort(driver string) int {
 	switch driver {
