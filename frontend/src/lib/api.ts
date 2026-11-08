@@ -42,7 +42,8 @@ import type {
 
 import { agentUrl, getAgentToken, isAgentMode } from './agent';
 
-const BASE = '/api';
+const API_BASE = (import.meta.env.VITE_API_BASE || '').replace(/\/$/, '');
+const BASE = `${API_BASE}/api`;
 
 function isSiteOnlyPath(path: string): boolean {
   return (
@@ -78,7 +79,7 @@ async function request<T>(path: string, init: RequestInit = {}, options: { site?
     response = await fetch(url, {
       ...init,
       headers,
-      credentials: useAgent ? 'omit' : 'same-origin',
+      credentials: useAgent ? 'omit' : API_BASE ? 'include' : 'same-origin',
     });
   } catch (error) {
     if (error instanceof DOMException && error.name === 'AbortError') throw error;

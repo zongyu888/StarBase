@@ -312,6 +312,9 @@ func defaultOrigins() map[string]bool {
 	values := []string{
 		"https://stargrow.store",
 		"https://www.stargrow.store",
+		"https://starbase-9o0.pages.dev",
+		"https://starbase.pages.dev",
+		"https://starbase-api.stargrow.store",
 		"http://localhost:5173",
 		"http://127.0.0.1:5173",
 		"http://localhost:8620",

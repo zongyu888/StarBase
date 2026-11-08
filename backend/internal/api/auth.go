@@ -163,13 +163,23 @@ func (s *Server) setSessionCookie(c *gin.Context, token string) {
 	}
 	maxAge := int(s.Auth.TokenTTL().Seconds())
 	secure := s.CookieSecure || c.Request.TLS != nil
-	c.SetSameSite(http.SameSiteStrictMode)
+	sameSite := http.SameSiteLaxMode
+	if secure {
+		// 前后端分离部署（Pages → api 子域）时，跨站请求必须使用 SameSite=None。
+		sameSite = http.SameSiteNoneMode
+	}
+	c.SetSameSite(sameSite)
 	c.SetCookie(sessionCookie, token, maxAge, "/", "", secure, true)
 }
 
 func (s *Server) clearSessionCookie(c *gin.Context) {
-	c.SetSameSite(http.SameSiteStrictMode)
-	c.SetCookie(sessionCookie, "", -1, "/", "", s.CookieSecure || c.Request.TLS != nil, true)
+	secure := s.CookieSecure || c.Request.TLS != nil
+	sameSite := http.SameSiteLaxMode
+	if secure {
+		sameSite = http.SameSiteNoneMode
+	}
+	c.SetSameSite(sameSite)
+	c.SetCookie(sessionCookie, "", -1, "/", "", secure, true)
 }
 
 func currentUser(c *gin.Context) *auth.User {

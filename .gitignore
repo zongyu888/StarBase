@@ -21,3 +21,5 @@ desktop/web/dist/
 frontend/test-results/
 frontend/playwright-report/
 backend/cmd/restore-data/
+
+frontend/dist-pages/
