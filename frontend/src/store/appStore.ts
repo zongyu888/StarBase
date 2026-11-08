@@ -131,7 +131,7 @@ export const useAppStore = create<AppState>()(
       tabs: [welcomeTab],
       activeTabId: 'welcome',
       theme: 'dark',
-      maxRows: 1000,
+      maxRows: 500,
       querySeq: 0,
       connectionDialog: { open: false },
       aboutOpen: false,

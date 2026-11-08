@@ -2,7 +2,7 @@
 
 一个本地优先、也可部署为多用户 Web 服务的数据库工作台，交互参考 Navicat。前端 React + TypeScript，后端 Go，支持 **MySQL / MariaDB / PostgreSQL / SQL Server / Oracle / SQLite / Snowflake / MongoDB / Redis / Chroma**，并内置 50+ 云厂商与兼容数据库模板。
 
-> 当前版本 **v1.5.0**。
+> 当前版本 **v1.6.0**。
 
 ## 下载
 

@@ -316,7 +316,7 @@ func (m *Manager) ChromaCollections(ctx context.Context, conn model.Connection, 
 	}
 	sort.Slice(out, func(i, j int) bool { return strings.ToLower(out[i].Name) < strings.ToLower(out[j].Name) })
 
-	sem := make(chan struct{}, 6)
+	sem := make(chan struct{}, 4)
 	var wg sync.WaitGroup
 	for index := range out {
 		wg.Add(1)

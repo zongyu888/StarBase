@@ -138,8 +138,8 @@ func (m *Manager) ExportTableRows(ctx context.Context, conn model.Connection, pa
 	if err != nil {
 		return nil, nil, err
 	}
-	if limit <= 0 || limit > 500000 {
-		limit = 500000
+	if limit <= 0 || limit > 100000 {
+		limit = 100000
 	}
 	cols := make([]string, 0, len(meta.Columns))
 	names := make([]string, 0, len(meta.Columns))

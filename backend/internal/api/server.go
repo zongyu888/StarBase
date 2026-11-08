@@ -7,6 +7,7 @@ import (
 	"net"
 	"net/http"
 	"net/url"
+	"os"
 	"path"
 	"strings"
 	"time"
@@ -43,7 +44,11 @@ func (s *Server) Router() *gin.Engine {
 	} else {
 		_ = r.SetTrustedProxies(nil)
 	}
-	r.Use(s.hostGuard(), gin.Logger(), gin.Recovery(), securityHeaders(), s.corsMiddleware(), s.authMiddleware())
+	r.Use(s.hostGuard())
+	if !strings.EqualFold(strings.TrimSpace(os.Getenv("NAVIDECK_ACCESS_LOG")), "off") {
+		r.Use(gin.Logger())
+	}
+	r.Use(gin.Recovery(), securityHeaders(), gzipMiddleware(), s.corsMiddleware(), s.authMiddleware())
 
 	r.GET("/downloads/:file", s.downloadFile)
 	r.GET("/api/health", s.health)

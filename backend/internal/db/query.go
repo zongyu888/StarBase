@@ -256,8 +256,8 @@ func (m *Manager) ExecuteQuery(ctx context.Context, conn model.Connection, passw
 	if maxRows <= 0 {
 		maxRows = 500
 	}
-	if maxRows > 20000 {
-		maxRows = 20000
+	if maxRows > 5000 {
+		maxRows = 5000
 	}
 	pool, err := m.DB(ctx, conn, password, database)
 	if err != nil {

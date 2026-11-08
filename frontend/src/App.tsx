@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import type { MouseEvent as ReactMouseEvent } from 'react';
 import { TopBar } from './components/TopBar';
 import { Sidebar } from './components/Sidebar';
@@ -7,10 +7,7 @@ import { StatusBar } from './components/StatusBar';
 import { ConnectionDialog } from './components/ConnectionDialog';
 import { ConfirmDialog, Spinner, ToastViewport } from './components/ui';
 import { WelcomeView } from './views/WelcomeView';
-import { QueryView } from './views/QueryView';
-import { TableView } from './views/TableView';
-import { RedisView } from './views/RedisView';
-import { ChromaView } from './views/ChromaView';
+
 import { AuthView } from './views/AuthView';
 import { startNewConnection, startNewQuery } from './lib/actions';
 import { useAppStore } from './store/appStore';
@@ -19,6 +16,11 @@ import { classNames } from './lib/utils';
 
 const SIDEBAR_MIN = 230;
 const SIDEBAR_MAX = 480;
+
+const QueryView = lazy(() => import('./views/QueryView').then((module) => ({ default: module.QueryView })));
+const TableView = lazy(() => import('./views/TableView').then((module) => ({ default: module.TableView })));
+const RedisView = lazy(() => import('./views/RedisView').then((module) => ({ default: module.RedisView })));
+const ChromaView = lazy(() => import('./views/ChromaView').then((module) => ({ default: module.ChromaView })));
 
 function App() {
   const theme = useAppStore((state) => state.theme);
@@ -128,7 +130,15 @@ function App() {
         <main className="workspace">
           <TabBar />
           <div className="workspace-content">
-            {tabs.map((tab) => (
+            <Suspense
+              fallback={
+                <div className="workspace-loading">
+                  <Spinner size={18} />
+                  <span>正在加载模块…</span>
+                </div>
+              }
+            >
+              {tabs.map((tab) => (
               <div
                 key={tab.id}
                 className={classNames('tab-pane', tab.id === activeTabId && 'active')}
@@ -147,6 +157,7 @@ function App() {
                 )}
               </div>
             ))}
+            </Suspense>
           </div>
         </main>
       </div>

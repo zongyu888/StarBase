@@ -236,10 +236,10 @@ func (m *Manager) open(ctx context.Context, conn model.Connection, password, dat
 	if err != nil {
 		return nil, err
 	}
-	pool.SetMaxOpenConns(12)
-	pool.SetMaxIdleConns(6)
-	pool.SetConnMaxIdleTime(10 * time.Minute)
-	pool.SetConnMaxLifetime(60 * time.Minute)
+	pool.SetMaxOpenConns(dbEnvInt("NAVIDECK_DB_MAX_OPEN", 8, 1, 64))
+	pool.SetMaxIdleConns(dbEnvInt("NAVIDECK_DB_MAX_IDLE", 4, 0, 32))
+	pool.SetConnMaxIdleTime(time.Duration(dbEnvInt("NAVIDECK_DB_IDLE_MINUTES", 3, 1, 120)) * time.Minute)
+	pool.SetConnMaxLifetime(time.Duration(dbEnvInt("NAVIDECK_DB_LIFETIME_MINUTES", 30, 1, 720)) * time.Minute)
 
 	pingCtx, cancel := context.WithTimeout(ctx, 15*time.Second)
 	defer cancel()
@@ -248,6 +248,18 @@ func (m *Manager) open(ctx context.Context, conn model.Connection, password, dat
 		return nil, humanizeConnError(conn, err)
 	}
 	return pool, nil
+}
+
+func dbEnvInt(name string, fallback, minValue, maxValue int) int {
+	raw := strings.TrimSpace(os.Getenv(name))
+	if raw == "" {
+		return fallback
+	}
+	value, err := strconv.Atoi(raw)
+	if err != nil || value < minValue || value > maxValue {
+		return fallback
+	}
+	return value
 }
 
 func (m *Manager) openSQL(conn model.Connection, dsn, driver string) (*sql.DB, error) {

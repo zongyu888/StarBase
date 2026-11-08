@@ -102,11 +102,17 @@ func (p *Policy) ValidateConnectionCached(ctx context.Context, conn model.Connec
 
 	err := p.ValidateConnection(ctx, conn, user)
 	p.mu.Lock()
-	if len(p.cache) > 2000 {
+	if _, exists := p.cache[key]; !exists && len(p.cache) >= 1024 {
 		for itemKey, result := range p.cache {
 			if result.expires.Before(now) {
 				delete(p.cache, itemKey)
 			}
+		}
+		for itemKey := range p.cache {
+			if len(p.cache) < 1024 {
+				break
+			}
+			delete(p.cache, itemKey)
 		}
 	}
 	p.cache[key] = cachedResult{err: err, expires: now.Add(30 * time.Second)}
